@@ -8,9 +8,12 @@ import { demoApps } from '../data/demo-apps';
 import { normalizeWhitespace } from '../support/strings';
 import { regionByHeading } from '../ui5/ui5-locators';
 import { waitForUi5Ready } from '../ui5/ui5-waits';
+import { BasePage } from './base-page';
 
-export class BrowseOrdersPage {
-  constructor(private readonly page: Page) {}
+export class BrowseOrdersPage extends BasePage {
+  constructor(page: Page) {
+    super(page);
+  }
 
   splitLayout(): Ui5SplitLayout {
     return new Ui5SplitLayout(this.page);
@@ -24,9 +27,8 @@ export class BrowseOrdersPage {
     return this.ordersSection().container().getByRole('listitem').filter({ hasText: /order \d+/i });
   }
 
-  async open(): Promise<void> {
-    await this.page.goto(demoApps.browseOrders.url);
-    await this.waitUntilReady();
+  protected get appUrl(): string {
+    return demoApps.browseOrders.url;
   }
 
   async waitUntilReady(): Promise<void> {

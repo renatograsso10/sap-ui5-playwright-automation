@@ -3,9 +3,12 @@ import { Ui5IconTabBar } from '../components/ui5/icon-tab-bar';
 import { Ui5WorklistGrid } from '../components/ui5/worklist-grid';
 import { demoApps } from '../data/demo-apps';
 import { searchboxByName } from '../ui5/ui5-locators';
+import { BasePage } from './base-page';
 
-export class ManageProductsPage {
-  constructor(private readonly page: Page) {}
+export class ManageProductsPage extends BasePage {
+  constructor(page: Page) {
+    super(page);
+  }
 
   get heading(): Locator {
     return this.page.getByText(/^Manage Products$/).first();
@@ -19,9 +22,8 @@ export class ManageProductsPage {
     return searchboxByName(this.page, /search/i);
   }
 
-  async open(): Promise<void> {
-    await this.page.goto(demoApps.manageProducts.url);
-    await this.waitUntilReady();
+  protected get appUrl(): string {
+    return demoApps.manageProducts.url;
   }
 
   async waitUntilReady(): Promise<void> {

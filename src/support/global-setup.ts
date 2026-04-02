@@ -1,13 +1,7 @@
 import fs from 'fs/promises';
-import { chromium, type FullConfig, type Page } from '@playwright/test';
+import { chromium, type FullConfig } from '@playwright/test';
 import { AUTH_STATE_DIR, AUTH_STATE_PATH } from './paths';
-
-async function acceptCookiesIfPresent(page: Page): Promise<void> {
-  const acceptButton = page.getByRole('button', { name: /(accept all|aceitar tudo)/i });
-  if (await acceptButton.isVisible({ timeout: 3_000 }).catch(() => false)) {
-    await acceptButton.click();
-  }
-}
+import { acceptCookiesIfPresent } from '../ui5/ui5-waits';
 
 export default async function globalSetup(config: FullConfig): Promise<void> {
   const projectUse = config.projects[0]?.use ?? {};

@@ -4,9 +4,12 @@ import { demoApps, type DemoAppDefinition } from '../data/demo-apps';
 import { escapeRegExp } from '../support/strings';
 import { buttonByName, regionByName } from '../ui5/ui5-locators';
 import { acceptCookiesIfPresent, waitForUi5Ready } from '../ui5/ui5-waits';
+import { BasePage } from './base-page';
 
-export class DemoAppsCatalogPage {
-  constructor(private readonly page: Page) {}
+export class DemoAppsCatalogPage extends BasePage {
+  constructor(page: Page) {
+    super(page);
+  }
 
   get heading(): Locator {
     return this.page.getByRole('heading', { name: /^demo apps$/i });
@@ -16,8 +19,12 @@ export class DemoAppsCatalogPage {
     return buttonByName(this.page, /read more/i);
   }
 
+  protected get appUrl(): string {
+    return '/#/demoapps';
+  }
+
   async open(): Promise<void> {
-    await this.page.goto('/#/demoapps');
+    await this.page.goto(this.appUrl);
     await this.acceptCookies();
     await this.waitUntilReady();
   }

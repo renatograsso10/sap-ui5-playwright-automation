@@ -1,9 +1,12 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 import { Ui5WorklistGrid } from '../components/ui5/worklist-grid';
 import { demoApps } from '../data/demo-apps';
+import { BasePage } from './base-page';
 
-export class ShopAdministrationToolPage {
-  constructor(private readonly page: Page) {}
+export class ShopAdministrationToolPage extends BasePage {
+  constructor(page: Page) {
+    super(page);
+  }
 
   get heading(): Locator {
     return this.page.getByRole('heading', { name: /customized shop administration tool/i });
@@ -17,9 +20,8 @@ export class ShopAdministrationToolPage {
     return this.page.getByRole('heading', { name: /customer overview/i });
   }
 
-  async open(): Promise<void> {
-    await this.page.goto(demoApps.shopAdministrationTool.url);
-    await this.waitUntilReady();
+  protected get appUrl(): string {
+    return demoApps.shopAdministrationTool.url;
   }
 
   async waitUntilReady(): Promise<void> {
