@@ -1,8 +1,11 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 import { demoApps } from '../data/demo-apps';
+import { BasePage } from './base-page';
 
-export class EmployeeDirectoryPage {
-  constructor(private readonly page: Page) {}
+export class EmployeeDirectoryPage extends BasePage {
+  constructor(page: Page) {
+    super(page);
+  }
 
   get homeHeading(): Locator {
     return this.page.getByRole('heading', { name: /^home$/i });
@@ -16,9 +19,8 @@ export class EmployeeDirectoryPage {
     return this.page.getByRole('button', { name: /show employee list/i });
   }
 
-  async open(): Promise<void> {
-    await this.page.goto(demoApps.employeeDirectory.url);
-    await this.waitUntilReady();
+  protected get appUrl(): string {
+    return demoApps.employeeDirectory.url;
   }
 
   async waitUntilReady(): Promise<void> {

@@ -1,9 +1,12 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 import { Ui5WorklistGrid } from '../components/ui5/worklist-grid';
 import { demoApps } from '../data/demo-apps';
+import { BasePage } from './base-page';
 
-export class WalkthroughPage {
-  constructor(private readonly page: Page) {}
+export class WalkthroughPage extends BasePage {
+  constructor(page: Page) {
+    super(page);
+  }
 
   get walkthroughHeading(): Locator {
     return this.page.getByRole('heading', { name: /^walkthrough$/i });
@@ -17,9 +20,8 @@ export class WalkthroughPage {
     return this.page.getByRole('button', { name: /say hello with dialog/i });
   }
 
-  async open(): Promise<void> {
-    await this.page.goto(demoApps.walkthrough.url);
-    await this.waitUntilReady();
+  protected get appUrl(): string {
+    return demoApps.walkthrough.url;
   }
 
   async waitUntilReady(): Promise<void> {

@@ -1,8 +1,8 @@
 import type { Locator, Page } from '@playwright/test';
 
-const FIRST_COLUMN = /^(first column|primeira coluna)$/i;
-const MIDDLE_COLUMN = /^(middle column|coluna média)$/i;
-const LAST_COLUMN = /^(last column|última coluna)$/i;
+const FIRST_COLUMN = /^first column$/i;
+const MIDDLE_COLUMN = /^middle column$/i;
+const LAST_COLUMN = /^last column$/i;
 
 export class Ui5SplitLayout {
   constructor(private readonly page: Page) {}

@@ -12,9 +12,12 @@ import {
   searchboxByName,
 } from '../ui5/ui5-locators';
 import { waitForHash, waitForUi5Ready } from '../ui5/ui5-waits';
+import { BasePage } from './base-page';
 
-export class ShoppingCartPage {
-  constructor(private readonly page: Page) {}
+export class ShoppingCartPage extends BasePage {
+  constructor(page: Page) {
+    super(page);
+  }
 
   splitLayout(): Ui5SplitLayout {
     return new Ui5SplitLayout(this.page);
@@ -44,9 +47,8 @@ export class ShoppingCartPage {
     return searchboxByName(this.page, /search/i);
   }
 
-  async open(): Promise<void> {
-    await this.page.goto(demoApps.shoppingCart.url);
-    await this.waitUntilReady();
+  protected get appUrl(): string {
+    return demoApps.shoppingCart.url;
   }
 
   async waitUntilReady(): Promise<void> {
@@ -85,6 +87,10 @@ export class ShoppingCartPage {
     const firstLink = promotedItems.link(/.+/);
     const firstAddButton = promotedItems.button(/add to shopping cart/i);
     const itemName = normalizeWhitespace(await firstLink.textContent());
+
+    if (!itemName) {
+      throw new Error('Could not resolve promoted item name — textContent was empty');
+    }
 
     await firstAddButton.click();
 
