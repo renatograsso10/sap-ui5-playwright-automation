@@ -1,0 +1,22 @@
+{
+  "name": "sap-ui5-demoapps-playwright",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Playwright E2E suite for SAP UI5 demo apps.",
+  "scripts": {
+    "test": "npm run test:ui && npm run test:api",
+    "test:ui": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui:app": "playwright test --ui",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:regression": "playwright test --grep @regression",
+    "test:api": "playwright test -c playwright.api.config.ts",
+    "report": "playwright show-report playwright-report/ui",
+    "report:api": "playwright show-report playwright-report/api"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.54.2",
+    "@types/node": "^24.0.0",
+    "typescript": "^5.8.3"
+  }
+}
